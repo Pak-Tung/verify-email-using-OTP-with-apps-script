@@ -25,7 +25,6 @@ function doPost(e) {
 
 function doGet(e) {
     let summary = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Logs').getRange('B1').getValue();
-
     return ContentService.createTextOutput(summary)
 }
 
@@ -245,15 +244,6 @@ function getOtpForUser(userEmail, dataArray) {
     return null; // Return null if no match is found
 }
 
-// function onOpen() {
-//     var ui = SpreadsheetApp.getUi();
-//     // Or DocumentApp, SlidesApp or FormApp.
-//     ui.createMenu('Send Email')
-//         .addItem('Send Checked Emails', 'sendDatEmail')
-//         .addToUi();
-// }
-
-// This version is if you want to add your signature line. You've got to add the Gmail API service over in the left sidebar first for this to work.
 function withSignatureLine() {
     let emails = SpreadsheetApp.getActiveSpreadsheet().getRangeByName("emails").getValues()
     const signature = Gmail.Users.Settings.SendAs.list('me').sendAs.find(account => account.isDefault).signature
@@ -317,7 +307,7 @@ function recordLog(userEmail, status) {
 function createJwtToken(userEmail) {
     const header = { alg: 'HS256', typ: 'JWT' };
     const payload = { email: userEmail, exp: Math.floor(Date.now() / 1000) + (60 * 60) }; // Expires in 1 hour
-    const secret = 'oddident-2024-secretkeys';
+    const secret = ''; // Add your secret key here
 
     const encodedHeader = Utilities.base64EncodeWebSafe(JSON.stringify(header));
     const encodedPayload = Utilities.base64EncodeWebSafe(JSON.stringify(payload));
@@ -372,6 +362,3 @@ function deleteExistingTriggers() {
   }
 }
 
-
-//test github remote
-//test github remote 2
